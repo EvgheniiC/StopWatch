@@ -15,7 +15,8 @@ public class MainActivity extends AppCompatActivity {
     Button buttonStart;
     Button buttonReset;
     private  int seconds;
-    private boolean isRunning;
+    private boolean isRunning = false;
+    private  boolean warRunning = false;
 
 
     @Override
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState !=null){
             seconds = savedInstanceState.getInt("seconds");
             isRunning = savedInstanceState.getBoolean("isRunning");
+            warRunning = savedInstanceState.getBoolean("warRunning");
         }
 
 
@@ -60,6 +62,21 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outstate);
         outstate.putInt("seconds",seconds);
         outstate.putBoolean("isRunning",isRunning);
+        outstate.putBoolean("warRunning",warRunning);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+         warRunning = isRunning;
+        isRunning = false;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRunning =warRunning;
+
     }
 
     public void clockReset(){
