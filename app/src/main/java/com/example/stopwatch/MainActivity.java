@@ -1,5 +1,6 @@
 package com.example.stopwatch;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -25,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         buttonStart = findViewById(R.id.buttonStart);
         buttonPausa = findViewById(R.id.buttonPausa);
         buttonReset = findViewById(R.id.buttonReset);
+        if (savedInstanceState !=null){
+            seconds = savedInstanceState.getInt("seconds");
+            isRunning = savedInstanceState.getBoolean("isRunning");
+        }
 
 
         runTimer();
@@ -48,9 +53,13 @@ public class MainActivity extends AppCompatActivity {
         buttonReset.setOnClickListener(oclBtn);
         buttonStart.setOnClickListener(oclBtn);
         buttonPausa.setOnClickListener(oclBtn);
+    }
 
-
-
+    @Override
+    protected void onSaveInstanceState(Bundle outstate) {
+        super.onSaveInstanceState(outstate);
+        outstate.putInt("seconds",seconds);
+        outstate.putBoolean("isRunning",isRunning);
     }
 
     public void clockReset(){
